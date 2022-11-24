@@ -12,7 +12,7 @@ const BookCondition = () => {
               <img src={guideBook} className=" rounded-lg shadow-2xl" alt="" />
             </div>
             <div>
-              <p className="text-red-700 font-mono text-bold">
+              <p className="text-green-600 font-mono text-bold hover:underline">
                 <Link>BOOK COLLECTING GUIDE</Link>
               </p>
               <h1 className="mt-6 text-4xl font-bold font-mono mb-4 ">
