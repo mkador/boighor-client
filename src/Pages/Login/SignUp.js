@@ -1,11 +1,62 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useContext } from 'react'
+import toast from 'react-hot-toast'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import signup from '../../assets/images/signup.jpg'
+import { AuthContext } from '../../Contexts/AuthProvider'
 
 const SignUp = () => {
-  const handleSubmit = (e) => {}
+  const navigate = useNavigate()
+  const location = useLocation()
+  const from = location.state?.from?.pathname || '/'
+  const {
+    signInWithGoogle,
+    user,
+    createUser,
+    updateUserProfile,
+    loading,
+    setLoading,
+  } = useContext(AuthContext)
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    const name = e.target.name.value
+    const image = e.target.image.files[0]
+    const email = e.target.email.value
+    const password = e.target.password.value
 
-  const handleGoogleSignIn = () => {}
+    console.log(name, email, password, image)
+
+    const formData = new FormData()
+    formData.append('image', image)
+
+    const uri =
+      'https://api.imgbb.com/1/upload?key=40842a18d7480a934e08c84577245887'
+    fetch(uri, {
+      method: 'POST',
+      body: formData,
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data.data.display_url)
+        createUser(email, password)
+          .then((result) => {
+            updateUserProfile(name, data.data.display_url)
+              .then(() => {
+                toast.success('Please, Check Your email')
+              })
+              .catch((error) => console.error(error))
+          })
+          .catch((error) => {
+            console.error(error)
+            setLoading(false)
+          })
+      })
+      .catch((error) => console.error(error))
+  }
+
+  const handleGooglePopUpLogin = () => {
+    signInWithGoogle().then((result) => console.log(result.user))
+    navigate(from, { replace: true })
+  }
 
   return (
     <div className="grid lg:grid-cols-2 pr-20 pb-12 pl-20">
@@ -48,7 +99,7 @@ const SignUp = () => {
                   id="image"
                   name="image"
                   accept="image/*"
-                  required
+                  // required
                 />
               </div>
               <div>
@@ -96,7 +147,7 @@ const SignUp = () => {
           </div>
           <div className="flex justify-center space-x-4">
             <button
-              onClick={handleGoogleSignIn}
+              onClick={handleGooglePopUpLogin}
               aria-label="Log in with Google"
               className="p-3 text-center btn btn-success w-full px-8  font-semibold rounded-md"
             >
@@ -117,7 +168,6 @@ const SignUp = () => {
             >
               Login
             </Link>
-            .
           </p>
         </div>
       </div>

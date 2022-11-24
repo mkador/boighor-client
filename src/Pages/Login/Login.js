@@ -1,11 +1,40 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useContext } from 'react'
+import toast from 'react-hot-toast'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import login from '../../assets/images/login.png'
+import { AuthContext } from '../../Contexts/AuthProvider'
 
 const Login = () => {
-  const handleSubmit = (e) => {}
+  const navigate = useNavigate()
+  const location = useLocation()
+  const from = location.state?.from?.pathname || '/'
+  const { signIn, loading, setLoading, signInWithGoole } = useContext(
+    AuthContext,
+  )
 
-  const handleGoogleSignIn = () => {}
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    const email = e.target.email.value
+    const password = e.target.password.value
+
+    console.log(email, password)
+
+    signIn(email, password)
+      .then((result) => {
+        toast.success('Login Successfully')
+        navigate(from, { replace: true })
+      })
+      .catch((error) => {
+        toast.error('Invalid Password')
+        console.log(error)
+        setLoading(false)
+      })
+  }
+
+  const handleGoogleSignIn = () => {
+    signInWithGoole().then((result) => console.log(result.user))
+    navigate(from, { replace: true })
+  }
   return (
     <div className="grid lg:grid-cols-2 pr-10 pb-12 pl-10">
       <div className="">
