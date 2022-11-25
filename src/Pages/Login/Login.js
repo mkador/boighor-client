@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import toast from 'react-hot-toast'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { setAuthToken } from '../../api/auth'
 import login from '../../assets/images/login.png'
 import { AuthContext } from '../../Contexts/AuthProvider'
 
@@ -8,7 +9,7 @@ const Login = () => {
   const navigate = useNavigate()
   const location = useLocation()
   const from = location.state?.from?.pathname || '/'
-  const { signIn, loading, setLoading, signInWithGoole } = useContext(
+  const { signIn, loading, setLoading, signInWithGoogle } = useContext(
     AuthContext,
   )
 
@@ -22,6 +23,8 @@ const Login = () => {
     signIn(email, password)
       .then((result) => {
         toast.success('Login Successfully')
+        console.log(result.user)
+        setAuthToken(result.user)
         navigate(from, { replace: true })
       })
       .catch((error) => {
@@ -32,8 +35,11 @@ const Login = () => {
   }
 
   const handleGoogleSignIn = () => {
-    signInWithGoole().then((result) => console.log(result.user))
-    navigate(from, { replace: true })
+    signInWithGoogle().then((result) => {
+      console.log(result.user)
+      setAuthToken(result.user)
+      navigate(from, { replace: true })
+    })
   }
   return (
     <div className="grid lg:grid-cols-2 pr-10 pb-12 pl-10">
@@ -128,7 +134,7 @@ const Login = () => {
           <p className="px-6 mt-3 text-sm text-center text-gray-400">
             Haven't an account?{' '}
             <Link
-              to="/login"
+              to="/signup"
               className="hover:underline text-bold text-green-600"
             >
               Sign Up

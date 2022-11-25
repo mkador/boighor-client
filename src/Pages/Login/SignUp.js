@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import toast from 'react-hot-toast'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { setAuthToken } from '../../api/auth'
 import signup from '../../assets/images/signup.jpg'
 import { AuthContext } from '../../Contexts/AuthProvider'
 
@@ -36,10 +37,14 @@ const SignUp = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data.data.display_url)
+        console.log(data?.data?.display_url)
         createUser(email, password)
           .then((result) => {
-            updateUserProfile(name, data.data.display_url)
+            console.log(result.user)
+            setAuthToken(result.user)
+
+            updateUserProfile(name, data?.data?.display_url)
+            navigate(from, { replace: true })
               .then(() => {
                 toast.success('Please, Check Your email')
               })
@@ -54,8 +59,11 @@ const SignUp = () => {
   }
 
   const handleGooglePopUpLogin = () => {
-    signInWithGoogle().then((result) => console.log(result.user))
-    navigate(from, { replace: true })
+    signInWithGoogle().then((result) => {
+      console.log(result.user)
+      setAuthToken(result.user)
+      navigate(from, { replace: true })
+    })
   }
 
   return (
@@ -134,7 +142,9 @@ const SignUp = () => {
             </div>
             <div className="">
               <div className="text-center btn btn-success w-full px-8  font-semibold rounded-md ">
-                <button type="submit">Sign up</button>
+                <button className="w-full" type="submit">
+                  Sign up
+                </button>
               </div>
             </div>
           </form>

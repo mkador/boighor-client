@@ -43,7 +43,7 @@ const AuthProvider = ({ children }) => {
   }
   const logout = () => {
     setLoading(true)
-    localStorage.removeItem('aircnc-token')
+    localStorage.removeItem('boighor-token')
     return signOut(auth)
   }
   useEffect(() => {
