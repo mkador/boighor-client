@@ -6,6 +6,7 @@ import Home from '../Pages/Home/Home'
 import Login from '../Pages/Login/Login'
 import SignUp from '../Pages/Login/SignUp'
 import ErrorPage from '../Pages/Shared/ErrorPage'
+import Products from '../Pages/Products/Products'
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
       {
         path: '/categories',
         element: <Categories></Categories>,
+      },
+      {
+        path: '/category/:id',
+        element: <Products></Products>,
       },
       {
         path: '/blog',

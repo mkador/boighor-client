@@ -1,17 +1,23 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const CategoryCards = ({ category }) => {
-  const { title } = category
+  const { category_id, name, image } = category
+  const navigate = useNavigate()
   return (
     <div className="card w-96 bg-base-100 shadow-xl image-full">
       <figure>
-        <img src="https://placeimg.com/400/225/arch" alt="Shoes" />
+        <img src={image} alt="" />
       </figure>
       <div className="card-body">
-        <h2 className="card-title">{title}</h2>
-        <p>If a dog chews shoes whose shoes does he choose?</p>
+        <h2 className="card-title">{name}</h2>
         <div className="card-actions justify-end">
-          <button className="btn btn-primary">Buy Now</button>
+          <button
+            className="btn btn-primary"
+            onClick={() => navigate(`category/${category_id}`)}
+          >
+            Buy Now
+          </button>
         </div>
       </div>
     </div>
