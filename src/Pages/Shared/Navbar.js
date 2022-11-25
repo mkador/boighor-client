@@ -17,7 +17,9 @@ const Navbar = () => {
         <Link className="text-xl  font-mono">About</Link>
       </li>
       <li>
-        <Link className="text-xl  font-mono">Contact</Link>
+        <Link to="/blog" className="text-xl  font-mono">
+          Blog
+        </Link>
       </li>
     </React.Fragment>
   )
