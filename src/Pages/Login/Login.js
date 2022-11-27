@@ -37,7 +37,7 @@ const Login = () => {
   const handleGoogleSignIn = () => {
     signInWithGoogle().then((result) => {
       console.log(result.user)
-      setAuthToken(result.user)
+      setAuthToken({ ...result.user, user_type: 'buyer' })
       navigate(from, { replace: true })
     })
   }

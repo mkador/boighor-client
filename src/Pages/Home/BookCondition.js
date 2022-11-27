@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import guideBook from '../../assets/images/guideBook.jpg'
+import BookingModal from '../Products/BookingModal'
 
 const BookCondition = () => {
   return (
@@ -25,6 +26,7 @@ const BookCondition = () => {
                 that's right for you, and understand exactly what the seller is
                 offering.
               </p>
+              {/* <BookingModal></BookingModal> */}
               <button className="btn btn-success">See the guide</button>
             </div>
           </div>

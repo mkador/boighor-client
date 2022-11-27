@@ -13,7 +13,6 @@ const Home = () => {
       <BookCondition></BookCondition>
 
       <UsedBooksCards></UsedBooksCards>
-      <h4>This is Home</h4>
     </div>
   )
 }

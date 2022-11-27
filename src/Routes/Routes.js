@@ -7,6 +7,9 @@ import Login from '../Pages/Login/Login'
 import SignUp from '../Pages/Login/SignUp'
 import ErrorPage from '../Pages/Shared/ErrorPage'
 import Products from '../Pages/Products/Products'
+import Dashboard from '../Pages/Dashboard/Dashboard'
+import AddProduct from '../Pages/Dashboard/AddProduct'
+import PrivateRoute from './PrivateRoute'
 
 const router = createBrowserRouter([
   {
@@ -17,6 +20,25 @@ const router = createBrowserRouter([
       {
         path: '/',
         element: <Home></Home>,
+      },
+      {
+        path: '/dashboard',
+        element: (
+          <PrivateRoute>
+            <Dashboard></Dashboard>
+          </PrivateRoute>
+        ),
+        children: [
+          {
+            path: '/dashboard/addProduct',
+            exact: true,
+            element: (
+              <PrivateRoute role="seller">
+                <AddProduct></AddProduct>
+              </PrivateRoute>
+            ),
+          },
+        ],
       },
       {
         path: '/login',

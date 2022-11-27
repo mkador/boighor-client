@@ -23,8 +23,9 @@ const SignUp = () => {
     const image = e.target.image.files[0]
     const email = e.target.email.value
     const password = e.target.password.value
+    const user_type = e.target.user_type.value
 
-    console.log(name, email, password, image)
+    console.log(name, email, password, image, user_type)
 
     const formData = new FormData()
     formData.append('image', image)
@@ -37,13 +38,11 @@ const SignUp = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data?.data?.display_url)
         createUser(email, password)
           .then((result) => {
-            console.log(result.user)
-            setAuthToken(result.user)
+            setAuthToken({ ...result.user, name, user_type })
 
-            updateUserProfile(name, data?.data?.display_url)
+            updateUserProfile(name, user_type, data?.data?.display_url)
             navigate(from, { replace: true })
               .then(() => {
                 toast.success('Please, Check Your email')
@@ -60,8 +59,7 @@ const SignUp = () => {
 
   const handleGooglePopUpLogin = () => {
     signInWithGoogle().then((result) => {
-      console.log(result.user)
-      setAuthToken(result.user)
+      setAuthToken({ ...result.user, user_type: 'buyer' })
       navigate(from, { replace: true })
     })
   }
@@ -83,6 +81,21 @@ const SignUp = () => {
             action=""
             className="space-y-5 ng-untouched ng-pristine ng-valid"
           >
+            <div>
+              <label htmlFor="user_type" className="block mb-2 text-sm">
+                User type
+              </label>
+              <select
+                name="user_type"
+                className="select select-success w-full max-w-xs"
+              >
+                <option defaultValue value={'buyer'}>
+                  Buyer
+                </option>
+                <option value={'seller'}>Seller</option>
+                <option value={'admin'}>Admin</option>
+              </select>
+            </div>
             <div className="space-y-2">
               <div>
                 <label htmlFor="email" className="block mb-2 text-sm">
