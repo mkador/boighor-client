@@ -6,7 +6,9 @@ const AddProduct = () => {
 
   return (
     <div>
-      <div>Email</div>
+      <div>
+        <h3>Add Products:</h3>
+      </div>
     </div>
   )
 }

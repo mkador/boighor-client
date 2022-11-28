@@ -6,7 +6,7 @@ const useUsersDetails = ({ user_type }) => {
 
   useEffect(() => {
     setUserDetailsLoading(true)
-    fetch(`http://localhost:5000/users/${user_type}`)
+    fetch(`https://boighor-server-nine.vercel.app/users/${user_type}`)
       .then((res) => res.json())
       .then((data) => {
         setUsersDetails(data)

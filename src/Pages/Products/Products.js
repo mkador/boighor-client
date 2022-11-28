@@ -7,7 +7,7 @@ const Products = () => {
   const [products, setProducts] = useState([])
   const { id } = useParams()
   useEffect(() => {
-    fetch(`http://localhost:5000/category/${id}`)
+    fetch(`https://boighor-server-nine.vercel.app/category/${id}`)
       .then((res) => res.json())
       .then((data) => setProducts(data))
   }, [id])

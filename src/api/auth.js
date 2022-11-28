@@ -6,7 +6,7 @@ export const setAuthToken = (user) => {
   }
   console.log(user)
 
-  fetch(`http://localhost:5000/user/${user?.email}`, {
+  fetch(`https://boighor-server-nine.vercel.app/user/${user?.email}`, {
     method: 'PUT',
     headers: {
       'content-type': 'application/json',
